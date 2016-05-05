@@ -8,6 +8,10 @@
 
 Элемент должен быть совместим с любой стабильной версией 2.2.x
 
+## Установка
+Распаковать архив в папку с элементами оплаты `/media/zoo/applications/jbuniversal/cart-elements/payment/yandexkassa`
+так, чтобы в указанной папке был файл `yandexkassa.php`
+
 ### Интеграция по Email
 https://github.com/JBZoo/Element-Payment-YandexKassa-Email
 
