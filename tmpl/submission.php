@@ -1,6 +1,6 @@
 <?php
 /**
- * JBZoo Element YandexKassa by Email
+ * JBZoo Element YandexKassa
  *
  * This file is part of the JBZoo CCK package.
  * For the full copyright and license information, please view the LICENSE
@@ -9,7 +9,7 @@
  * @package     JBZoo
  * @license     MIT
  * @copyright   Copyright (C) JBZoo.com, All rights reserved.
- * @link        https://github.com/JBZoo/Element-Payment-YandexKassa-Email
+ * @link        https://github.com/JBZoo/Element-Payment-YandexKassa
  * @author      Denis Smetannikov <denis@jbzoo.com>
  */
 
