@@ -51,7 +51,7 @@ class JBCartElementPaymentYandexKassa extends JBCartElementPayment
      */
     public function isValid($params = array())
     {
-        $myMD5 = strtoupper(md5(';', array(
+        $myMD5 = strtoupper(md5(implode(';', array(
             $_REQUEST['action'],
             $_REQUEST['orderSumAmount'],
             $_REQUEST['orderSumCurrencyPaycash'],
@@ -60,7 +60,7 @@ class JBCartElementPaymentYandexKassa extends JBCartElementPayment
             $_REQUEST['invoiceId'],
             $_REQUEST['customerNumber'],
             $this->config->get('password')
-        )));
+        ))));
 
         if ($myMD5 !== strtoupper($_REQUEST['md5'])) {
             return false;
