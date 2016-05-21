@@ -66,6 +66,10 @@ class JBCartElementPaymentYandexKassa extends JBCartElementPayment
             return false;
         }
 
+        if ('checkorder' == strtolower($_REQUEST['action'])) {
+            $this->renderResponse();
+        }
+
         return true;
     }
 
@@ -98,4 +102,45 @@ class JBCartElementPaymentYandexKassa extends JBCartElementPayment
         return $this->_order->val($this->getOrderSumm(), $order->getCurrency())->convert($payCurrency);
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function renderResponse()
+    {
+        $responseBody = $this->_renderResponse($_REQUEST['action'], $_REQUEST['invoiceId'], 0);
+        header("Content-Type: application/xml");
+        echo $responseBody;
+        exit;
+    }
+
+    /**
+     * Building XML response.
+     * @param  string $functionName "checkOrder" or "paymentAviso" string
+     * @param  string $invoiceId    transaction number
+     * @param  string $result_code  result code
+     * @param  string $message      error message. May be null.
+     * @return string                prepared XML response
+     */
+    protected function _renderResponse($functionName, $invoiceId, $result_code, $message = null)
+    {
+        $performedDatetime = $this->_formatDate(new DateTime());
+
+        $response = array(
+            '<?xml version="1.0" encoding="UTF-8"?>',
+            '<' . $functionName . 'Response performedDatetime="' . $performedDatetime . '"',
+            ' code="' . $result_code . '" ',
+            ($message != null ? 'message="' . $message . '"' : ""),
+            ' invoiceId="' . $invoiceId . '"',
+            ' shopId="' . trim($this->config->get('shopId')) . '"',
+            '/>'
+        );
+
+        return implode(PHP_EOL, $response);
+    }
+
+    protected function _formatDate(DateTime $date)
+    {
+        $performedDatetime = $date->format("Y-m-d") . "T" . $date->format("H:i:s") . ".000" . $date->format("P");
+        return $performedDatetime;
+    }
 }
