@@ -143,4 +143,13 @@ class JBCartElementPaymentYandexKassa extends JBCartElementPayment
         $performedDatetime = $date->format("Y-m-d") . "T" . $date->format("H:i:s") . ".000" . $date->format("P");
         return $performedDatetime;
     }
+    
+    /**
+     * Set payment rate
+     * @return JBCartValue
+     */
+    public function getRate()
+    {
+        return $this->_order->val($this->config->get('rate', '3.5%'));
+    }    
 }
