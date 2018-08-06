@@ -31,12 +31,20 @@ class JBCartElementPaymentYandexKassa extends JBCartElementPayment
      */
     public function getRedirectUrl()
     {
+        if ($this->config->get('modifytotal') == 0) {
+            $finaleSum = round($this->_getOrderAmount()->val(), 0);
+        }
+        else {
+            $percentSum = str_replace('%','',$this->config->get('rate', '3.5%')) / 100;
+            $finaleSum = round(round($this->_getOrderAmount()->val(), 0) + (round($this->_getOrderAmount()->val(), 0) * $percentSum), 2);
+        }
+
         $fields = array(
             'shopId'         => trim($this->config->get('shopId')),
             'scid'           => trim($this->config->get('scid')),
             'customerNumber' => 'userid_' . (int)JFactory::getUser()->id,
             'orderNumber'    => $this->getOrderId(),
-            'sum'            => round(round($this->_getOrderAmount()->val(), 0) + (round($this->_getOrderAmount()->val(), 0) * 0.035), 2), // + коммиссия 3.5%
+            'sum'            => $finaleSum, // коммиссия
         );
 
         $url = $this->isDebug() ? $this->_apiTest : $this->_apiUrl;
