@@ -36,7 +36,7 @@ class JBCartElementPaymentYandexKassa extends JBCartElementPayment
             'scid'           => trim($this->config->get('scid')),
             'customerNumber' => 'userid_' . (int)JFactory::getUser()->id,
             'orderNumber'    => $this->getOrderId(),
-            'sum'            => round(round($this->_getOrderAmount()->val(), 0) + (round($this->_getOrderAmount()->val(), 0) * 0.035), 2), // + коммиссия 3.5%
+            'sum'            => round($this->_getOrderAmount()->val(), 0),
         );
 
         $url = $this->isDebug() ? $this->_apiTest : $this->_apiUrl;
